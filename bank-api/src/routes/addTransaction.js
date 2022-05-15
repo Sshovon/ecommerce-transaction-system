@@ -7,9 +7,15 @@ router.post('/',async (req,res)=>{
     try{
         const { inID, outID, amount } = req.body;
         const transaction= new Transaction({inID,outID,amount});
-        await transaction.save();
+        
+        await transaction.generateTrx();
+        
+        //console.log(transaction)
+        //await transaction.save();
+        //console.log(transaction)
         res.send({
-            "status":"success"
+            status:"success",
+            trxID: transaction.trxID
         })
         
     }catch(e){

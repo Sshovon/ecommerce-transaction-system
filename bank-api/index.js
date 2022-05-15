@@ -10,6 +10,7 @@ const port = process.env.PORT || 4000;
 const addTransaction = require('./src/routes/addTransaction');
 const checkBalance = require('./src/routes/checkBalance');
 const validity =require('./src/routes/validTransaction');
+const adjustBalance=require('./src/routes/adjustBalance')
 // var createHash = require('hash-generator');
 // var hashLength = 8;
 // var hash = createHash(hashLength);
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use('/add',addTransaction);
 app.use('/balance',checkBalance);
 app.use('/valid',validity);
+app.use('/adjust',adjustBalance);
 
 
 

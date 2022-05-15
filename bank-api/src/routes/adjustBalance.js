@@ -6,15 +6,17 @@ const Account = require('../models/accountModel');
 router.post('/',async (req,res)=>{
     try{
         const {inID,outID,amount}= req.body;
-        res.send(accountInfo.balance.toString());
-
+    
         const inAccount = await Account.findOne({accountNumber:inID});
         const outAccount = await Account.findOne({accountNumber:outID});
 
         inAccount.balance = inAccount.balance + parseInt(amount);
         outAccount.balance = outAccount.balance - parseInt(amount);
 
-        Promise.all([inAccount.save(),outAccount.save()]);
+        console.log(inAccount)
+        console.log(outAccount)
+
+        await Promise.all([inAccount.save(),outAccount.save()]);
         res.send({
             status:"success"
         })

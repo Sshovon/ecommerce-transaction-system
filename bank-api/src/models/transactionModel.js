@@ -7,8 +7,8 @@ const hashLength = 12;
 
 const transactionSchema =  new mongoose.Schema({
     trxID:{
-        type: String,
-        default: createHash(hashLength)
+        type: String
+        
     },
     inID:{
         type:String,
@@ -31,6 +31,13 @@ const transactionSchema =  new mongoose.Schema({
     
 })
 
+// can't  use arrow function here because arrow does bind this 
+transactionSchema.methods.generateTrx = async function(){
+    const transaction = this;
+    //console.log(transaction)
+    transaction.trxID = createHash(hashLength);
+    await transaction.save();
+}
 
 
 
