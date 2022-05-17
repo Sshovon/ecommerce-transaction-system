@@ -7,7 +7,7 @@ const hashLength = 12;
 
 const transactionSchema =  new mongoose.Schema({
     trxID:{
-        type: String
+        type: String,
         
     },
     inID:{
