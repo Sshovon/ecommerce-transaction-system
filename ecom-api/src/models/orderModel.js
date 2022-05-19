@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
+const createHash = require('hash-generator');
+const hashLength = 12;
+
 
 const orderSchema = new mongoose.Schema({
     orderID:{
         type:String,
-        required:true,
     },
     customerName:{
         type:String,
@@ -44,6 +46,14 @@ const orderSchema = new mongoose.Schema({
         default:true,
     }
 })
+
+
+orderSchema.methods.generateOrderID= async function(){
+    const order = this;
+    //console.log(transaction)
+    order.orderID = createHash(hashLength);
+    await order.save();
+}
 
 
 const orderList = mongoose.model('order',orderSchema);
