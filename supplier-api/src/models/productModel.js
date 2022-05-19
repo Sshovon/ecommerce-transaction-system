@@ -13,11 +13,11 @@ const productSchema = new mongoose.Schema({
     },
     price:{
         type:Number,
-        required:true,
+        default:0
     },
     quantity:{
         type:Number,
-        required:true,
+        default:0
     },
     description:{
         type:String,
@@ -65,6 +65,17 @@ productSchema.methods.updateDiscount = async function(discount){
     product.price = discount;
     await product.save()
 }
+
+productSchema.statics.viewAll = async function(){
+    const products = await productList.find({});
+    return products;
+}
+
+productSchema.statics.viewOne = async function(productID){
+    const product = await productList.find({productID});
+    return product;
+}
+
 
 const productList = mongoose.model('Product',productSchema);
 module.exports = productList;

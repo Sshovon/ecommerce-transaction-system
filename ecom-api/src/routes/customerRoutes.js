@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Customer = require('../models/customerModel');
+const Cart = require('../models/cartItemModel')
 const auth=require("../middlewares/auth")
 
 
@@ -23,7 +24,15 @@ router.post('/signup',async (req,res)=>{
             password
         });
         await customer.save();
-        res.send(customer);
+        const cartItem = new Cart({
+            email
+        })
+        await cartItem.save();
+    
+        res.send({
+            customer,
+            cartItem
+        });
 
     }catch(e){
         const error= e.message;
