@@ -3,6 +3,7 @@ const validator = require('validator')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
+
 const customerSchema = new mongoose.Schema({
     contactInformation: {
         email: {
@@ -74,6 +75,10 @@ const customerSchema = new mongoose.Schema({
         accountNumber:{
             type:Number,
         }
+    },
+    verified:{
+        type:Boolean,
+        default:false
     }
 
 })
