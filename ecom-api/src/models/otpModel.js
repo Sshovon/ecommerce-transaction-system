@@ -16,7 +16,7 @@ const otpSchema = new Schema({
         type:Date,
         default:Date.now(),
         index:{
-            expires:60
+            expires:300
         }
     }
 },{timestamps:true})
@@ -27,10 +27,11 @@ const otpSchema = new Schema({
 otpSchema.statics.verifyOTP = async function (email,code) {
     const otp = await OTP.findOne({ email })
     if (!otp)
-        throw new Error("Invalid OTP")
+        throw new Error("OTP expired")
     const isMatch = await bcryptjs.compare(code, otp.otp)
     if (!isMatch)
-        throw new Error("Invalid credentials")
+        throw new Error("OTP expired")
+    await OTP.deleteOne({_id:otp._id})
     return otp;
 }
 

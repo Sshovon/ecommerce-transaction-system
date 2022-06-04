@@ -23,7 +23,7 @@ router.post('/send' ,async (req,res)=>{
             subject:`OTP`,
             text:`Your OTP is ${code}`
         }
-        await mailTransporter.sendMail(mailDetails);
+        //await mailTransporter.sendMail(mailDetails);
         res.send(code);
         
     }catch(e){
@@ -33,10 +33,13 @@ router.post('/send' ,async (req,res)=>{
 
 })
 
-router.get('/verify/:otp' ,async (req,res)=>{
+router.post('/verify/:otp' ,async (req,res)=>{
     try{
-        
-        
+        const {email} = req.body
+        const otp=req.params.otp;
+        await OTP.verifyOTP(email,otp)
+        res.send({message:"success"})
+
     }catch(e){
         const error=e.message;
         res.status(400).send({error})
