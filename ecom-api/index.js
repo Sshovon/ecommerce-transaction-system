@@ -2,6 +2,11 @@ const express = require('express');
 require('dotenv').config()
 require('./src/db/mongoose')
 const app= express();
+
+let cors = require('cors') 
+app.use(cors())
+
+
 const port = process.env.PORT || 6000;
 const userRoutes =require('./src/routes/customerRoutes') 
 const bankRoutes=require('./src/routes/bankIntegrationRoutes'); 

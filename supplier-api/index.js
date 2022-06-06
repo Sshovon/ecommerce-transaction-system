@@ -1,7 +1,9 @@
 const express = require('express');
+const cors = require('cors')
 require('dotenv').config()
 require('./src/db/mongoose')
 const app= express();
+app.use(cors())
 const port = process.env.PORT || 5000;
 
 const addProduct = require("./src/routes/productRoutes");

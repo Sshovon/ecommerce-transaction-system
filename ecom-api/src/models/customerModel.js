@@ -112,7 +112,7 @@ customerSchema.methods.validateSecret= async function(secret){
 //statics methods
 
 customerSchema.statics.verifyCredentials = async function (email, password) {
-    const user = await Customer.findOne({ email })
+    const user = await Customer.findOne({ "contactInformation.email":email })
     if (!user)
         throw new Error("Invalid credentials")
     const isMatch = await bcryptjs.compare(password, user.password)

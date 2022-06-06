@@ -4,6 +4,9 @@ require('./src/db/mongoose')
 //require('./generateBankData') // generating bank-account 
 const app= express();
 
+let cors = require('cors') 
+app.use(cors())
+
 const port = process.env.PORT || 4000;
 
 
