@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.use('/product',addProduct);
 app.use('/update',updateProduct);
-app.use('/product',supplierRoutes);
+app.use('/supplier',supplierRoutes);
 
 app.listen(port,()=>{
     console.log(`supplier-api server started on port ${port}`);

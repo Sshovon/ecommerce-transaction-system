@@ -9,7 +9,7 @@ router.post('/signup',async (req,res)=>{
     try{
         const {email,password,mobile,address,name} = req.body;
 
-        const existMail = await Customer.find({email})
+        const existMail = await Customer.find({"contactInformation.email":email})
         if(existMail.length){
             throw new Error("Email already exist");
         }

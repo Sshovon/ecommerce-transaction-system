@@ -23,7 +23,7 @@ router.post('/send' ,async (req,res)=>{
             subject:`OTP`,
             text:`Your OTP is ${code}`
         }
-        //await mailTransporter.sendMail(mailDetails);
+        await mailTransporter.sendMail(mailDetails);
         res.send(code);
         
     }catch(e){
