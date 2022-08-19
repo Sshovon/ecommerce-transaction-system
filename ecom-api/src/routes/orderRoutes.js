@@ -5,7 +5,8 @@ const Order = require('../models/orderModel')
 
 
 //need to modify
-router.post('/place',async(req,res)=>{
+router.post('/place', async(req,res)=>{
+    console.log(req.body)
     try{  
 
         const order = new Order({
@@ -13,6 +14,7 @@ router.post('/place',async(req,res)=>{
 
         })
         await order.generateOrderID();
+        console.log(order)
         res.send(order);
     }catch(e){
         res.send({e})

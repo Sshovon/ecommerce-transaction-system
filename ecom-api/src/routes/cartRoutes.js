@@ -17,11 +17,11 @@ router.get('/view',auth ,async(req,res)=>{
 })
 
 //add --> + ; remove --> -  
-router.get('/add', auth, async (req, res) => {
+router.post('/add', auth, async (req, res) => {
     try {
-        const productID = req.query.productid;
-        const quantity = req.query.quantity;
-        const price = req.query.price;
+        const productID = req.body.productID;
+        const quantity = req.body.quantity;
+        const price = req.body.price;
         const cartItem = await Cart.findOne({ email: req.user.contactInformation.email });
         await cartItem.addItem(productID, price, quantity);
         res.send(cartItem);

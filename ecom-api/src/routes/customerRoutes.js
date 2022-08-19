@@ -47,15 +47,16 @@ router.post('/signin',async (req,res)=>{
         if(!user) throw new Error("Invalid credential");
         const token = await user.generateAuthToken();
         res.cookie('token',token);
-        res.send(token);
+        res.send({user,token});
     }catch(e){
         const error= e.message;
         res.status(400).send({error})
-    }
+    } 
 });
 
 router.get('/signout',auth,async (req,res)=>{
     try{
+        console.log(req.headers, req.user)
         const cookieToken=req.headers.token;
         //const [user]=await Customer.find({_id:req.user._id});
         const user=req.user;

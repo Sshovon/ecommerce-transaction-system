@@ -30,6 +30,7 @@ router.get('/viewone',async(req,res)=>{
     try{
         const productID=req.query.productid;
         const product = await Product.viewOne(productID);
+        console.log(product)
         res.send(product);
     }catch(e){
         res.send({e})
