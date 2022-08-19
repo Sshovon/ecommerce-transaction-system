@@ -30,9 +30,16 @@ router.post("/place", auth, async (req, res) => {
   }
 });
 
-// router.get('/status',async(req,res)=>{
-
-// })
+router.get("/information", async (req, res) => {
+  try {
+    const orderID = req.query.orderID;
+    const order = await Order.orderInformation(orderID);
+    res.send(order);
+  } catch (e) {
+    const error = e.message;
+    res.send({ error });
+  }
+});
 
 // router.patch('/changestatus',async(req,res)=>{
 

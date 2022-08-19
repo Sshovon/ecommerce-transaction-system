@@ -14,39 +14,33 @@ const supplierTransactionSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    productID:{
-        type:String,
-        ref: "Product", 
-        required:true,
-    },
-    quantiy:{
-        type:Number,
-        required:true,
-    },
     trxID:{
         type:String,
         required:true
     },
-    price:{
+    amount:{
         type:Number,
         required:true,
     },
-    statusProcessing:{
+    validateOrder:{
         type:Boolean,
-        default:true,
-    },
-    statusDelivered:{
-        type:Boolean,
-        default:true,
+        default:false
     }
 })
 
 
-supplierTransactionSchema.methods.changeStatus = async function(){
-    const transaction = this;
-    transaction.statusProcessing=false;
-    transaction.statusDelivered=true;
-    await transaction.save();
+// supplierTransactionSchema.methods.changeStatus = async function(){
+//     const transaction = this;
+//     transaction.statusProcessing=false;
+//     transaction.statusDelivered=true;
+//     await transaction.save();
+// }
+
+
+supplierTransactionSchema.methods.validate = async function(trxID){
+    const [st]= await supplierTransactionList.find({trxID});
+    st.validateOrder=true;
+    await st.save();
 }
 
 

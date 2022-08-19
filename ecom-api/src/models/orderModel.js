@@ -55,6 +55,11 @@ orderSchema.methods.generateOrderID= async function(){
     await order.save();
 }
 
+orderSchema.statics.orderInformation = async function(orderID){
+    const result=await orderList.find({orderID})
+    return result[0]
+}
+
 
 const orderList = mongoose.model('order',orderSchema);
 module.exports = orderList;
