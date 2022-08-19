@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const OTP= require('../models/otpModel');
 const {createTransport}= require('nodemailer')
+const auth = require('../middlewares/auth')
 
 router.post('/send' ,async (req,res)=>{
     try{
@@ -33,12 +34,12 @@ router.post('/send' ,async (req,res)=>{
 
 })
 
-router.post('/verify/:otp' ,async (req,res)=>{
+router.get('/verify/:otp' ,auth,async (req,res)=>{
     try{
-        const {email} = req.body
+        const email = req.user.contactInformation.email;
         const otp=req.params.otp;
         await OTP.verifyOTP(email,otp)
-        res.send({message:"success"})
+        res.send({message:"verified"})
 
     }catch(e){
         const error=e.message;

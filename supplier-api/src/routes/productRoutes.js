@@ -1,41 +1,62 @@
 const express = require("express");
 const router = express.Router();
-const Product = require("../models/productModel")
+const Product = require("../models/productModel");
 
+//view product by seller , by category
 
-//view product by seller , by category 
+router.post("/add", async (req, res) => {
+  //const {name,price,quantity,description,category,sellerID} = req.body;
+  try {
+    const {
+      name,
+      price,
+      quantity,
+      description,
+      category,
+      rating,
+      sellerID,
+      discount,
+    } = req.body;
+    const product = new Product({
+      name,
+      price,
+      quantity,
+      description,
+      category,
+      rating,
+      sellerID,
+      discount,
+    });
+    await product.generateID();
+    res.send(product);
+  } catch (e) {
+    const error = e.message;
+    res.send({ error });
+  }
+});
 
-router.post('/add',async(req,res)=>{
-    //const {name,price,quantity,description,category,sellerID} = req.body;
-    try{
-        const product = new Product({...req.body});
-        await product.generateID();
-        res.send(product);
+// /view --> all products
+// /view?ID=something --> specific one product
+// /view?sellerID=something --> specific seller's all products
 
-    }catch(e){
-        res.send({e})
+router.get("/view", async (req, res) => {
+  try {
+    const ID = req.query.ID;
+    const sellerID = req.query.sellerID;
+    if (ID) {
+      const product = await Product.viewOne(productID);
+      res.send(product);
+    } else if (sellerID) {
+      const products = await Product.viewSpecificSellerID(sellerID);
+      res.send(products);
+    } else {
+      const products = await Product.viewAll();
+      res.send(products);
     }
-})
-
-router.get('/viewall',async(req,res)=>{
-    try{
-        const products = await Product.viewAll();
-        res.send(products);
-    }catch(e){
-        res.send({e})
-    }
-})
-
-router.get('/viewone',async(req,res)=>{
-    try{
-        const productID=req.query.productid;
-        const product = await Product.viewOne(productID);
-        console.log(product)
-        res.send(product);
-    }catch(e){
-        res.send({e})
-    }
-})
-
+  } catch (e) {
+    const error = e.message;
+    res.send({ error });
+  }
+});
 
 module.exports = router;

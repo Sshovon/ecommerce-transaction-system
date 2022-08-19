@@ -5,6 +5,10 @@ const cartSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    customerID:{
+        type:String,
+        required:true
+    },
     cart:[
         {
             productID:{
@@ -18,7 +22,7 @@ const cartSchema = new mongoose.Schema({
             }
 
         }    
-    ]
+    ],
     
 })
 

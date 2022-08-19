@@ -67,15 +67,18 @@ productSchema.methods.updateDiscount = async function(discount){
 }
 
 productSchema.statics.viewAll = async function(){
-    const products = await productList.find({});
+    const products = await Product.find({});
     return products;
 }
 
 productSchema.statics.viewOne = async function(productID){
-    const product = await productList.find({productID});
+    const product = await Product.find({productID});
     return product;
+}
+productSchema.statics.viewSpecificSellerProducts= async function(sellerID){
+    const product = await Product.find({sellerID});
 }
 
 
-const productList = mongoose.model('Product',productSchema);
-module.exports = productList;
+const Product = mongoose.model('Product',productSchema);
+module.exports = Product;

@@ -2,6 +2,9 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const createHash = require('hash-generator');
+const hashLength = 12;
+
 
 
 const customerSchema = new mongoose.Schema({
@@ -30,6 +33,11 @@ const customerSchema = new mongoose.Schema({
         },
 
     },
+    customerID:{
+        type:String,
+        unique:true
+    }
+    ,
     name: {
         type: String,
         required: true,
@@ -94,6 +102,12 @@ customerSchema.methods.toJSON = function () {
     return userObject;
 }
 
+customerSchema.methods.generateID = async function(){
+    const customer = this;
+    customer.customerID = createHash(hashLength);
+    await customer.save();
+}
+
 customerSchema.methods.generateAuthToken = async function () {
     const user = this;
     const token = jwt.sign({ _id: user._id }, process.env.JWT, { expiresIn: '12h' });
@@ -121,9 +135,7 @@ customerSchema.statics.verifyCredentials = async function (email, password) {
     return user;
 }
 
-
 //middleware
-
 customerSchema.pre('save', async function (next) {
     const user = this;  //this is a mongoose object
     if (user.isModified("password")) {

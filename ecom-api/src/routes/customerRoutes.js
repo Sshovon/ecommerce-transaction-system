@@ -23,17 +23,16 @@ router.post('/signup',async (req,res)=>{
             name,
             password
         });
-        await customer.save();
+        await customer.generateID();
         const cartItem = new Cart({
-            email
+            email,
+            customerID:customer.customerID
         })
         await cartItem.save();
-    
         res.send({
             customer,
             cartItem
         });
-
     }catch(e){
         const error= e.message;
         res.status(400).send({error})

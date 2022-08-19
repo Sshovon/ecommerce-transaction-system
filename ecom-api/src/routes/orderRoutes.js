@@ -1,40 +1,41 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Order = require('../models/orderModel')
+const Order = require("../models/orderModel");
+const auth = require("../middlewares/auth");
 
+// router.get('/ok',auth,(req,res)=>{
+//     console.log(req.user);
+//     res.send("ok")
+// })
 
+// You have to call bank api to make transaction and pass the transaction id here for customer-end
+router.post("/place", auth, async (req, res) => {
+  //here orders is a array of order objects
+  // each order has 4 properties
+  // sellerID, productID, quantity, price
 
-//need to modify
-router.post('/place', async(req,res)=>{
-    console.log(req.body)
-    try{  
+  try {
+    const { trxID, orders } = req.body;
+    const order = new Order({
+      customerID: req.user.customerID,
+      trxID,
+      orders,
+    });
+    await order.generateOrderID();
+    // console.log(order)
+    res.send(order);
+  } catch (e) {
+    const error = e.message;
+    res.send({ error });
+  }
+});
 
-        const order = new Order({
-            ...req.body,
+// router.get('/status',async(req,res)=>{
 
-        })
-        await order.generateOrderID();
-        console.log(order)
-        res.send(order);
-    }catch(e){
-        res.send({e})
-    }
-})
+// })
 
+// router.patch('/changestatus',async(req,res)=>{
 
-router.get('/status',async(req,res)=>{
-
-})
-
-router.patch('/changestatus',async(req,res)=>{
-
-})
-
-
-
-
-
-
-
+// })
 
 module.exports = router;
