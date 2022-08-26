@@ -41,7 +41,7 @@ router.post('/integrate',auth,async(req,res)=>{
         user.bankInformation.setSecret=true;
         await user.save();
         res.send({
-            status:"success"
+            user
         })
     }catch(e){
         const error=e.message;

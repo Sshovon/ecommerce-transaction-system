@@ -4,7 +4,7 @@ const User = require("../models/customerModel");
 
 
 const auth = async(req,res,next)=>{
-    // console.log('auth' , req.headers.cookie)
+    console.log('auth' , req.headers.cookie)
     try{
         // const token=req.rawHeaders[9].split('=')[1];
         const token = req.headers.cookie.split('=')[1]

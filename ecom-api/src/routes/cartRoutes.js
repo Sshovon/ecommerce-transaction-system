@@ -18,6 +18,7 @@ router.get('/view',auth ,async(req,res)=>{
 
 //add --> + ; remove --> -  
 router.post('/add', auth, async (req, res) => {
+    console.log(req)
     try {
         const productID = req.body.productID;
         const quantity = req.body.quantity;

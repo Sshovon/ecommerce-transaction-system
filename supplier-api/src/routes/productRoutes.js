@@ -42,9 +42,11 @@ router.post("/add", async (req, res) => {
 router.get("/view", async (req, res) => {
   try {
     const ID = req.query.ID;
+    console.log(req.query)
     const sellerID = req.query.sellerID;
     if (ID) {
-      const product = await Product.viewOne(productID);
+      const product = await Product.viewOne(ID);
+      console.log(product)
       res.send(product);
     } else if (sellerID) {
       const products = await Product.viewSpecificSellerID(sellerID);
@@ -55,6 +57,7 @@ router.get("/view", async (req, res) => {
     }
   } catch (e) {
     const error = e.message;
+    console.log(error)
     res.send({ error });
   }
 });

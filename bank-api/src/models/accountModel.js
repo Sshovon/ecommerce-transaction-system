@@ -34,11 +34,12 @@ const accountSchema =  new mongoose.Schema({
     },
     balance:{
         type: Number,
-        default: 1000
+        default: 100000
     }
 })
 
 
-const accountList = mongoose.model('Account',accountSchema); 
 
-module.exports = accountList;
+const Account = mongoose.model('Account',accountSchema); 
+
+module.exports = Account;

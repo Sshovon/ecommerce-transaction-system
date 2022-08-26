@@ -9,7 +9,7 @@ app.use(cors())
 
 const port = process.env.PORT || 4000;
 
-
+require('./src/utils/populateBankAccount');
 const addTransaction = require('./src/routes/addTransaction');
 const checkBalance = require('./src/routes/checkBalance');
 const validity =require('./src/routes/validTransaction');

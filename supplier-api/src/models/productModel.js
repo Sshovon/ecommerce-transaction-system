@@ -73,6 +73,7 @@ productSchema.statics.viewAll = async function(){
 
 productSchema.statics.viewOne = async function(productID){
     const product = await Product.find({productID});
+    console.log('db', product)
     return product;
 }
 productSchema.statics.viewSpecificSellerProducts= async function(sellerID){
