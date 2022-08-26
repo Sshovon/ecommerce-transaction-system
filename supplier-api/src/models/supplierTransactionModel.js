@@ -29,6 +29,12 @@ const supplierTransactionSchema = new mongoose.Schema({
     validateOrder:{
         type:Boolean,
         default:false
+    },
+    productID:{
+        type:String
+    },
+    name:{
+        type:String
     }
 })
 

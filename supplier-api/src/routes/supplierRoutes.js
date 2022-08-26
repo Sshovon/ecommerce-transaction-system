@@ -5,7 +5,7 @@ const SupplierTransaction = require("../models/supplierTransactionModel");
 
 router.post("/add", async (req, res) => {
   try {
-    const { orderID, customerID, sellerID, trxID, amount, quantity } = req.body;
+    const { orderID, customerID, sellerID, trxID, amount, quantity,productID } = req.body;
     const supplierTransaction = new SupplierTransaction({
       orderID,
       customerID,
@@ -13,6 +13,7 @@ router.post("/add", async (req, res) => {
       trxID,
       amount,
       quantity,
+      productID
     });
     await supplierTransaction.save();
     res.send(supplierTransaction);
@@ -32,6 +33,7 @@ router.post("/validateOrder", async (req, res) => {
     res.send({ error });
   }
 });
+
 
 router.post("/view", async (req, res) => {
   try {
