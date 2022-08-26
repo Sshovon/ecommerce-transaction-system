@@ -5,9 +5,15 @@ const SupplierTransaction = require("../models/supplierTransactionModel");
 
 router.post("/add", async (req, res) => {
   try {
-
-    const {orderID,customerID,sellerID,trxID,amount} = req.body
-    const supplierTransaction = new SupplierTransaction({orderID,customerID,sellerID,trxID,amount});
+    const { orderID, customerID, sellerID, trxID, amount, quantity } = req.body;
+    const supplierTransaction = new SupplierTransaction({
+      orderID,
+      customerID,
+      sellerID,
+      trxID,
+      amount,
+      quantity,
+    });
     await supplierTransaction.save();
     res.send(supplierTransaction);
   } catch (e) {
@@ -16,16 +22,28 @@ router.post("/add", async (req, res) => {
   }
 });
 
+router.post("/validateOrder", async (req, res) => {
+  try {
+    const {trxID}=req.body
+    await SupplierTransaction.validate(trxID);
+    res.send({ message: "success" });
+  } catch (e) {
+    const error = e.message;
+    res.send({ error });
+  }
+});
 
-router.get('/validateOrder',async(req,res)=>{
-    try {
-        await SupplierTransaction.validate(trxID)
-        res.send({message:"success"});
-      } catch (e) {
-        const error = e.message;
-        res.send({ error });
-      }
-})
+router.post("/view", async (req, res) => {
+  try {
+    const {sellerID} = req.body
+    const orders=await SupplierTransaction.find({sellerID});
+    res.send(orders);
+  } catch (e) {
+    const error = e.message;
+    res.send({ error });
+  }
+});
+
 
 // router.get('/status',async(req,res)=>{
 //     try{

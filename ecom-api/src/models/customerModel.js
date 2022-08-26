@@ -87,7 +87,8 @@ const customerSchema = new mongoose.Schema({
     verified:{
         type:Boolean,
         default:false
-    }
+    },
+
 
 })
 

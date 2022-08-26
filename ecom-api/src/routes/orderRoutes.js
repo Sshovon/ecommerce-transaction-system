@@ -13,7 +13,6 @@ router.post("/place", auth, async (req, res) => {
   //here orders is a array of order objects
   // each order has 4 properties
   // sellerID, productID, quantity, price
-
   try {
     const { trxID, orders } = req.body;
     const order = new Order({
@@ -21,6 +20,7 @@ router.post("/place", auth, async (req, res) => {
       trxID,
       orders,
     });
+
     await order.generateOrderID();
     // console.log(order)
     res.send(order);
@@ -30,11 +30,21 @@ router.post("/place", auth, async (req, res) => {
   }
 });
 
-router.get("/information", async (req, res) => {
+router.get("/information", auth, async (req, res) => {
   try {
     const orderID = req.query.orderID;
     const order = await Order.orderInformation(orderID);
     res.send(order);
+  } catch (e) {
+    const error = e.message;
+    res.send({ error });
+  }
+});
+
+router.get("/view", auth, async (req, res) => {
+  try {
+    const orders = await Order.find({ customerID: req.user.customerID });
+    res.send(orders);
   } catch (e) {
     const error = e.message;
     res.send({ error });

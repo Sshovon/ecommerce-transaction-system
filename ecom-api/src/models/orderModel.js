@@ -9,7 +9,6 @@ const orderSchema = new mongoose.Schema({
     },
     customerID:{
         type:String,
-        unique:true,
         ref: 'Customer'
     },
     orders:[
@@ -23,7 +22,7 @@ const orderSchema = new mongoose.Schema({
                 ref: "Product", 
                 required:true,
             },
-            quantiy:{
+            quantity:{
                 type:Number,
                 required:true,
             },
@@ -35,7 +34,8 @@ const orderSchema = new mongoose.Schema({
     ],
     trxID:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     
     statusProcessing:{

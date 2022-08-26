@@ -12,6 +12,7 @@ const bankRoutes=require('./src/routes/bankIntegrationRoutes');
 const cartRoutes = require('./src/routes/cartRoutes');
 const otpRoutes= require('./src/routes/otpRoutes');
 const orderRoutes = require('./src/routes/orderRoutes')
+const supplierRoutes= require('./src/routes/supplierRoutes')
 app.use(express.json()); 
 
 app.use('/user',userRoutes);
@@ -19,6 +20,7 @@ app.use('/bank',bankRoutes);
 app.use('/cart',cartRoutes);
 app.use('/otp',otpRoutes); 
 app.use('/order',orderRoutes);
+app.use('/supplier',supplierRoutes);
 
 app.listen(port,()=>{
     console.log(`ecom-api server started on port ${port}`);

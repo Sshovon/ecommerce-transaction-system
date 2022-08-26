@@ -16,6 +16,7 @@ router.get('/view',auth ,async(req,res)=>{
     }
 })
 
+
 //add --> + ; remove --> -  
 router.post('/add', auth, async (req, res) => {
     console.log(req)
@@ -23,8 +24,9 @@ router.post('/add', auth, async (req, res) => {
         const productID = req.body.productID;
         const quantity = req.body.quantity;
         const price = req.body.price;
+        const sellerID = req.body.sellerID
         const cartItem = await Cart.findOne({ email: req.user.contactInformation.email });
-        await cartItem.addItem(productID, price, quantity);
+        await cartItem.addItem(productID, price, quantity,sellerID);
         res.send(cartItem);
     } catch (e) {
         const error = e.message;
@@ -50,7 +52,7 @@ router.delete('/remove', auth ,async (req, res) => {
     }
 })
 
-router.post('/clear',auth ,async (req, res) => {
+router.get('/clear',auth ,async (req, res) => {
     try {
         const cart = await Cart.findOne( {email:req.user.contactInformation.email})
         await cart.clearCart();

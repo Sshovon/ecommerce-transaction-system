@@ -22,6 +22,10 @@ const supplierTransactionSchema = new mongoose.Schema({
         type:Number,
         required:true,
     },
+    quantity:{
+        type:Number,
+        required:true
+    },
     validateOrder:{
         type:Boolean,
         default:false

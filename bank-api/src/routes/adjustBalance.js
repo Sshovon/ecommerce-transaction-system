@@ -9,12 +9,12 @@ router.post('/',async (req,res)=>{
     
         const inAccount = await Account.findOne({accountNumber:inID});
         const outAccount = await Account.findOne({accountNumber:outID});
-
+        
         inAccount.balance = inAccount.balance + parseInt(amount);
         outAccount.balance = outAccount.balance - parseInt(amount);
 
-        console.log(inAccount)
-        console.log(outAccount)
+        // console.log(inAccount)
+        // console.log(outAccount)
 
         await Promise.all([inAccount.save(),outAccount.save()]);
         res.send({
