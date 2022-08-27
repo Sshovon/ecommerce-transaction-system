@@ -49,7 +49,25 @@ router.get("/view", auth, async (req, res) => {
     const error = e.message;
     res.send({ error });
   }
+
 });
+
+
+// router.post('/status',async(req,res)=>{
+//     try{
+
+//         const {orderID} = req.query.orderID;
+//         const order= SupplierTransaction.findOne({orderID});
+//         res.send({
+//             statusProcessing:order.statusProcessing,
+//             statusDelivered:order.statusDelivered
+//         });
+
+//     }catch(e){
+//         res.send({e});
+//     }
+// })
+
 
 // router.patch('/changestatus',async(req,res)=>{
 

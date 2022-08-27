@@ -49,6 +49,7 @@ const supplierTransactionSchema = new mongoose.Schema({
 
 supplierTransactionSchema.statics.validate = async function(trxID){
     const [st]= await supplierTransactionList.find({trxID});
+    console.log(st)
     st.validateOrder=true;
     await st.save();
 }

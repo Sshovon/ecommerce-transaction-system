@@ -3,6 +3,22 @@ const router = express.Router();
 
 const Product = require("../models/productModel");
 
+
+
+router.patch("/",async (req,res)=>{
+  try {
+    const { sellerID, productID,name,price,quantity,description,category,discount } = req.body;
+    // console.log("hey req" ,req.body)
+    const product = await Product.findOne({ sellerID, productID });
+    await product.updateProduct(name,price,quantity,description,category,discount);
+    // console.log(product)
+    res.send(product);
+  } catch (e) {
+    const error = e.message;
+    res.send({ error });
+  }
+})
+
 router.patch("/quantity", async (req, res) => {
   //const {name,price,quantity,description,category,sellerID} = req.body;
   try {

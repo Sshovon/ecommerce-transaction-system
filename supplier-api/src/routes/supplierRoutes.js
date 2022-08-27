@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const SupplierTransaction = require("../models/supplierTransactionModel");
+const Product = require('../models/productModel')
 
 router.post("/add", async (req, res) => {
   try {
@@ -25,7 +26,9 @@ router.post("/add", async (req, res) => {
 
 router.post("/validateOrder", async (req, res) => {
   try {
-    const {trxID}=req.body
+    const {trxID,quantity,productID}=req.body;
+    const product =await Product.find({productID})
+    await product.updateQuantity(quantity)
     await SupplierTransaction.validate(trxID);
     res.send({ message: "success" });
   } catch (e) {
@@ -33,7 +36,6 @@ router.post("/validateOrder", async (req, res) => {
     res.send({ error });
   }
 });
-
 
 router.post("/view", async (req, res) => {
   try {
