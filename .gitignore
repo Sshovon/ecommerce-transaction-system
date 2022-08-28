@@ -1,0 +1,13 @@
+images
+
+#Bank-api
+bank-api/node_modules
+bank-api/.env
+
+#Ecom-api
+ecom-api/node_modules
+ecom-api/.env
+
+#Supplier-api
+supplier-api/node_modules
+supplier-api/.env

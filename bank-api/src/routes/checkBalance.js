@@ -17,13 +17,12 @@ router.post('/',async (req,res)=>{
     }
 })
 
-
 router.get('/transaction',async(req,res)=>{
     try{
         const accountNumber = req.query.accountNumber
         
-        inTransaction =  Transaction.find({inID:accountNumber});
-        outTransaction =  Transaction.find({outID:accountNumber});
+        const inTransaction =  Transaction.find({inID:accountNumber});
+        const outTransaction =  Transaction.find({outID:accountNumber});
         const result=await Promise.all([inTransaction,outTransaction])
 
         res.send(result)
