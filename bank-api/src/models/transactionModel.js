@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 const validator = require('validator');
 //const uniqueValidator = require('mongoose-unique-validator')
 const createHash = require('hash-generator');
-const hashLength = 12;
+const hashLength = 8;
 
 
 const transactionSchema =  new mongoose.Schema({
     trxID:{
         type: String,
-        
+        uppercase:true   
     },
     inID:{
         type:String,
