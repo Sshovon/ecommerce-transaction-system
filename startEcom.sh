@@ -1,3 +1,4 @@
+gnome-terminal --tab
 cd  ecom-api
 
 

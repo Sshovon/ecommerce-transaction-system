@@ -1,3 +1,4 @@
+gnome-terminal --tab
 cd  supplier-api
 
 if [ -f .env ]; then

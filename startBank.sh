@@ -1,5 +1,5 @@
+gnome-terminal --tab
 cd  bank-api
-
 
 if [ -f .env ]; then
 echo "old .env found"
@@ -14,3 +14,4 @@ echo "JWT=nahdi" >> .env
 echo "env created successfully"
 
 yarn  install && yarn start
+
