@@ -35,7 +35,8 @@ const supplierTransactionSchema = new mongoose.Schema({
     },
     name:{
         type:String
-    }
+    },
+    
 })
 
 

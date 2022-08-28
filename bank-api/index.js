@@ -13,7 +13,7 @@ require('./src/utils/populateBankAccount');
 const addTransaction = require('./src/routes/addTransaction');
 const checkBalance = require('./src/routes/checkBalance');
 const validity =require('./src/routes/validTransaction');
-const adjustBalance=require('./src/routes/adjustBalance')
+//const adjustBalance=require('./src/routes/adjustBalance')
 const devRoutes = require('./src/routes/developmentRoutes')
 // var createHash = require('hash-generator');
 // var hashLength = 8;
@@ -24,7 +24,7 @@ app.use(express.json());
 app.use('/add',addTransaction);
 app.use('/balance',checkBalance);
 app.use('/valid',validity);
-app.use('/adjust',adjustBalance);
+//app.use('/adjust',adjustBalance);
 app.use('/dev',devRoutes)
 
 

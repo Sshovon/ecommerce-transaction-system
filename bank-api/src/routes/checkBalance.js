@@ -2,6 +2,8 @@ const express = require("express")
 const router = express.Router();
 
 const Account = require('../models/accountModel');
+const Transaction = require('../models/transactionModel');
+
 
 router.post('/',async (req,res)=>{
     try{
@@ -14,6 +16,24 @@ router.post('/',async (req,res)=>{
         res.status(404).send({e})
     }
 })
+
+
+router.get('/transaction',async(req,res)=>{
+    try{
+        const accountNumber = req.query.accountNumber
+        
+        inTransaction =  Transaction.find({inID:accountNumber});
+        outTransaction =  Transaction.find({outID:accountNumber});
+        const result=await Promise.all([inTransaction,outTransaction])
+
+        res.send(result)
+        
+    }catch(e){
+        const error=e.message
+        res.status(404).send({error})
+    }
+})
+
 
 
 module.exports = router

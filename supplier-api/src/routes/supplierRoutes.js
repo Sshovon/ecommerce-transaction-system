@@ -26,16 +26,26 @@ router.post("/add", async (req, res) => {
 
 router.post("/validateOrder", async (req, res) => {
   try {
-    const {trxID,quantity,productID}=req.body;
+
+    /// you have to give orderID
+    const {trxID,quantity,productID,orderID}=req.body;
     const product =await Product.find({productID})
-    await product.updateQuantity(quantity)
-    await SupplierTransaction.validate(trxID);
-    res.send({ message: "success" });
+    const upQuantity= product.updateQuantity(quantity)
+    const supplierValidate =SupplierTransaction.validate(trxID);
+    await Promise.all([upQuantity,supplierValidate]);
+
+    const result = await SupplierTransaction.find({orderID,validateOrder:false})
+    
+    res.send({ message: "success" ,
+      changeStatus: result.length ? false: true
+  });
   } catch (e) {
     const error = e.message;
     res.send({ error });
   }
 });
+
+
 
 router.post("/view", async (req, res) => {
   try {
@@ -47,6 +57,7 @@ router.post("/view", async (req, res) => {
     res.send({ error });
   }
 });
+
 
 
 // router.get('/status',async(req,res)=>{

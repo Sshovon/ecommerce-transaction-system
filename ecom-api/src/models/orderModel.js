@@ -60,6 +60,13 @@ orderSchema.statics.orderInformation = async function(orderID){
     return result[0]
 }
 
+orderSchema.statics.changeStatus = async function(orderID){
+    const result=await orderList.findOne({orderID})
+    result.statusProcessing=false;
+    result.statusDelivered=true;
+    await result.save()
+}
+
 
 const orderList = mongoose.model('order',orderSchema);
 module.exports = orderList;

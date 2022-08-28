@@ -53,24 +53,20 @@ router.get("/view", auth, async (req, res) => {
 });
 
 
-// router.post('/status',async(req,res)=>{
-//     try{
+router.post('/changestatus',async(req,res)=>{
+    try{
 
-//         const {orderID} = req.query.orderID;
-//         const order= SupplierTransaction.findOne({orderID});
-//         res.send({
-//             statusProcessing:order.statusProcessing,
-//             statusDelivered:order.statusDelivered
-//         });
+        const {orderID} = req.query.orderID;
+        await Order.changeStatus(orderID)
+        res.status(200).send({
+            status:true
+        });
 
-//     }catch(e){
-//         res.send({e});
-//     }
-// })
+    }catch(e){
+        res.send({e});
+    }
+})
 
 
-// router.patch('/changestatus',async(req,res)=>{
-
-// })
 
 module.exports = router;

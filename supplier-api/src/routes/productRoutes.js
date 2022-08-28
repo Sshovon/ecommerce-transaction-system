@@ -1,10 +1,31 @@
 const express = require("express");
 const router = express.Router();
+const multer = require('multer') 
+const path = require('path')
 const Product = require("../models/productModel");
 
-//view product by seller , by category
+const storage = multer.diskStorage({
+  destination :(req, file , cb)=>{
+    cb(null, '../images');
+  },
+  filename: (req,file, cb)=>{
+    console.log(file)
+    cb(null, Date.now() + path.extname(file.originalname))
+  }
+})
 
-router.post("/add", async (req, res) => {
+
+ 
+const upload =multer({storage})
+
+
+router.post('/upload',  upload.single('image'),async (req,res)=>{
+  console.log(req.file)
+  res.send("ok")
+})
+
+
+router.post("/add",async (req, res) => {
   //const {name,price,quantity,description,category,sellerID} = req.body;
   try {
     const {
