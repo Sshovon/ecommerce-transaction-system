@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
 const createHash = require('hash-generator');
-const hashLength = 12;
+const hashLength = 6;
 
 
 const orderSchema = new mongoose.Schema({
     orderID:{
         type:String,
+        uppercase:true
     },
     customerID:{
         type:String,
@@ -35,7 +36,8 @@ const orderSchema = new mongoose.Schema({
     trxID:{
         type:String,
         required:true,
-        unique:true
+        unique:true,
+        uppercase:true
     },
     
     statusProcessing:{

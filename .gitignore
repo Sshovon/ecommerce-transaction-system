@@ -11,3 +11,7 @@ ecom-api/.env
 #Supplier-api
 supplier-api/node_modules
 supplier-api/.env
+supplier-api/src/images
+
+
+what-to-do.txt

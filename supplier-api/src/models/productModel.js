@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-const createHash = require("hash-generator");
-const hashLength = 6;
+
 
 const productSchema = new mongoose.Schema({
   productID: {
     type: String,
     unique: true,
+    uppercase:true
   },
   name: {
     type: String,
@@ -38,6 +38,10 @@ const productSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  image:{
+    filename:String,
+    path:String
+  }
 });
 
 

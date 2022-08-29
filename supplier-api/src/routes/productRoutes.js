@@ -1,31 +1,25 @@
 const express = require("express");
 const router = express.Router();
-const multer = require('multer') 
-const path = require('path')
+const multer = require("multer");
+const path = require("path");
 const Product = require("../models/productModel");
 
 const storage = multer.diskStorage({
-  destination :(req, file , cb)=>{
-    cb(null, '../images');
+  destination: (req, file, cb) => {
+    cb(null, "src/images");
   },
-  filename: (req,file, cb)=>{
-    console.log(file)
-    cb(null, Date.now() + path.extname(file.originalname))
-  }
-})
+  filename: (req, file, cb) => {
+    console.log(file);
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+const upload = multer({ storage });
+// router.post('/upload',  upload.single('image'),async (req,res)=>{
+//   console.log(req.file)
+//   res.send("ok")
+// })
 
-
- 
-const upload =multer({storage})
-
-
-router.post('/upload',  upload.single('image'),async (req,res)=>{
-  console.log(req.file)
-  res.send("ok")
-})
-
-
-router.post("/add",async (req, res) => {
+router.post("/add", upload.single("image"), async (req, res) => {
   //const {name,price,quantity,description,category,sellerID} = req.body;
   try {
     const {
@@ -47,6 +41,10 @@ router.post("/add",async (req, res) => {
       rating,
       sellerID,
       discount,
+      imgae: {
+        filename: req.file.filename,
+        path: `http://localhost:${process.env.PORT}` + req.file.path,
+      },
     });
     await product.generateID();
     res.send(product);
@@ -63,11 +61,11 @@ router.post("/add",async (req, res) => {
 router.get("/view", async (req, res) => {
   try {
     const ID = req.query.ID;
-    console.log(req.query)
+    console.log(req.query);
     const sellerID = req.query.sellerID;
     if (ID) {
       const product = await Product.viewOne(ID);
-      console.log(product)
+      console.log(product);
       res.send(product);
     } else if (sellerID) {
       const products = await Product.viewSpecificSellerID(sellerID);
@@ -78,9 +76,17 @@ router.get("/view", async (req, res) => {
     }
   } catch (e) {
     const error = e.message;
-    console.log(error)
+    console.log(error);
     res.send({ error });
   }
+});
+
+router.get("/view-image", async (req, res) => {
+  var options = {
+    root: path.join(__dirname),
+  };
+  console.log(options);
+  res.sendFile("./images/1661711682306.png");
 });
 
 module.exports = router;

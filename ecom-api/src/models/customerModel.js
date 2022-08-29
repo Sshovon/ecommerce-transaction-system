@@ -3,7 +3,7 @@ const validator = require('validator')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const createHash = require('hash-generator');
-const hashLength = 12;
+const hashLength = 6;
 
 
 
@@ -35,7 +35,8 @@ const customerSchema = new mongoose.Schema({
     },
     customerID:{
         type:String,
-        unique:true
+        unique:true,
+        uppercase:true
     }
     ,
     name: {

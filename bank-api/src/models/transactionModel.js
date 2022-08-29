@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const validator = require('validator');
 //const uniqueValidator = require('mongoose-unique-validator')
 const createHash = require('hash-generator');
-const hashLength = 8;
+const hashLength = 6;
 
 
 const transactionSchema =  new mongoose.Schema({
