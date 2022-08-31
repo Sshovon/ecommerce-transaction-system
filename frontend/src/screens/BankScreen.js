@@ -132,13 +132,16 @@ function BankScreen() {
         toast.error("OTP Verification failed!!");
       } else {
         toast.success("OTP Verification Successful");
-        await toast.promise(makePayment(), {
-          loading: "Wait a bit...",
-          success: "Transaction Successful",
-          error: "Transaction Failed",
-        });
-        direction === "next" ? newStep++ : newStep--;
-        newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
+        setTimeout(async()=>{
+          await toast.promise(makePayment(), {
+            loading: "Wait a bit...",
+            success: "Transaction Successful",
+            error: "Transaction Failed",
+          });
+          direction === "next" ? newStep++ : newStep--;
+          newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
+        },1000)
+        
       }
     }
     // check if steps are within bounds
@@ -168,7 +171,7 @@ function BankScreen() {
           </StepperContext.Provider>
         </div>
       </div>
-      {/* navigation button */}
+      {/* navigation button */} 
       {currentStep !== steps.length && (
         <StepperControl
           handleClick={handleClick}

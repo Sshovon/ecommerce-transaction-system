@@ -77,11 +77,11 @@ const ProductScreen = ({ match, location }) => {
       {!Object.keys(product).length ? (
         <Loader />
       ) : (
-
+       
         <Row>
-          {/* {console.log(Object.values(product).at(0).name)} */}
+          {console.log(Object.values(product).at(0))}
           <Col md={6}>
-            <Image src={Object.values(product).at(0).image} alt={Object.values(product).at(0).name} fluid />
+            <Image src={Object.values(product).at(0).image.path} alt={Object.values(product).at(0).image.path} fluid />
           </Col>
           <Col md={3}>
             <ListGroup variant='flush'>
@@ -89,15 +89,12 @@ const ProductScreen = ({ match, location }) => {
                 <h3>{Object.values(product).at(0).name}</h3>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Rating
-                  value={Object.values(product).at(0).rating}
-                  text={`  ${Object.values(product).at(0).numReviews} reviews`}
-                  color="black"
-                />
+                {Object.values(product).at(0).category}
               </ListGroup.Item>
+              
               <ListGroup.Item>Price: ${Object.values(product).at(0).price}</ListGroup.Item>
               <ListGroup.Item>
-                Description: {Object.values(product).at(0).description}
+                {Object.values(product).at(0).description}
               </ListGroup.Item>
             </ListGroup>
           </Col>

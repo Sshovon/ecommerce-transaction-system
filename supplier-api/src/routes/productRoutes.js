@@ -19,8 +19,11 @@ const upload = multer({ storage });
 //   res.send("ok")
 // })
 
-router.post("/add", upload.single("image"), async (req, res) => {
+router.post("/add",upload.single('image') ,async (req, res) => {
   //const {name,price,quantity,description,category,sellerID} = req.body;
+  console.log(req)
+  console.log(req.body)
+  console.log(req.file)
   try {
     const {
       name,
@@ -41,9 +44,9 @@ router.post("/add", upload.single("image"), async (req, res) => {
       rating,
       sellerID,
       discount,
-      imgae: {
+      image: {
         filename: req.file.filename,
-        path: `http://localhost:${process.env.PORT}` + req.file.path,
+        path: `http://localhost:${process.env.PORT}/` + req.file.filename,
       },
     });
     await product.generateID();
@@ -68,7 +71,7 @@ router.get("/view", async (req, res) => {
       console.log(product);
       res.send(product);
     } else if (sellerID) {
-      const products = await Product.viewSpecificSellerID(sellerID);
+      const products = await Product.find({sellerID});
       res.send(products);
     } else {
       const products = await Product.viewAll();

@@ -25,7 +25,7 @@ module.exports = function (app) {
             },
             headers: {
                 Connection: "keep-alive",
-                'Content-Type': 'application/json;charset=UTF-8',
+                // 'Content-Type': 'application/json;charset=UTF-8;',
                 "Access-Control-Allow-Origin": "*",
                 Accept: "application/json"
             }

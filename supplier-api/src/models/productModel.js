@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const createHash = require('hash-generator');
+const hashLength = 6;
 
 
 const productSchema = new mongoose.Schema({
@@ -77,7 +79,9 @@ productSchema.methods.updateProduct = async function (
   await product.save();
 };
 
+
 productSchema.methods.updateQuantity = async function (quantity) {
+  console.log('hi')
   const product = this;
   product.quantity = parseInt(product.quantity) - parseInt(quantity);
   await product.save();

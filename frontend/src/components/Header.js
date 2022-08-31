@@ -18,24 +18,25 @@ const Header = () => {
   const history = useHistory()
   const clickHandlerOUT = async () => {
     console.log('clickhanderOUT')
-    if(localStorage.getItem('supplier')){
+    if (localStorage.getItem('supplier')) {
       await axios.get('/api3/supplier/signout', {
         withCredentials: true
       })
         .then(function (response) {
-          console.log(response);
+          // console.log(response);
           if (response.status === 200) {
             localStorage.removeItem('supplier');
-            window.history.go(0)
+            setSupplier("")
             history.push('/')
+            window.history.go(0)
           }
-  
+
         })
         .catch(function (error) {
           console.log(error);
           alert(error.response.data.error)
         });
-    }else{
+    } else {
       await axios.get('/api3/user/signout', {
         withCredentials: true
       })
@@ -43,38 +44,50 @@ const Header = () => {
           console.log(response);
           if (response.status === 200) {
             localStorage.removeItem('user');
-            window.history.go(0)
+            setUser("")
             history.push('/')
+            window.history.go(0)
           }
-  
+
         })
         .catch(function (error) {
           console.log(error);
           alert(error.response.data.error)
         });
     }
-    
+
 
 
   }
 
   const getUser = () => {
-    setUser(JSON.parse(localStorage.getItem('user')))
-    // setSupplier(JSON.parse(localStorage.getItem('supplier')))
+    // console.log(localStorage.getItem('user'))
+    if(!user === true && localStorage.getItem('user')){
+      setUser(JSON.parse(localStorage.getItem('user')))
+
+    }
+    if(!supplier === true && localStorage.getItem('supplier'))
+      setSupplier(JSON.parse(localStorage.getItem('supplier')))
   }
 
-  useEffect( ()=>{
+  useEffect(() => {
     // if(!re) reload()
-    console.log(user)
-    if(!user)
-      getUser()
+    // console.log(user)
+    
+    getUser()
     // if(user) window.history.go(0)
-  },[user])
+  }, [user, supplier])
 
   useEffect(() => {
-    setSupplier(JSON.parse(localStorage.getItem('supplier')))
+    return history.listen((location) => { 
+       console.log(`You changed the page to: ${location.pathname}`) 
+       getUser()
+    }) 
+ },[history]) 
+  // useEffect(() => {
+  //   setSupplier(JSON.parse(localStorage.getItem('supplier')))
 
-  }, [localStorage.getItem('supplier')])
+  // }, [localStorage.getItem('supplier')])
 
 
   return (
@@ -95,19 +108,47 @@ const Header = () => {
 
               {!user || !user.bankInformation.setSecret ?
                 <>
-                  <LinkContainer to='/supply'>
-                    <Nav.Link>
-                      <i className='fas fa-user'> Supply</i>
-                    </Nav.Link>
-                  </LinkContainer>
+                  {console.log("user", supplier)}
+                  {localStorage.getItem('supplier') && JSON.parse(localStorage.getItem('supplier')).isAdmin === false  &&
+                    <LinkContainer to='/supply'>
+                      <Nav.Link>
+                        <i className='fas fa-user'> Sell on ECOM</i>
+                      </Nav.Link>
+                    </LinkContainer>
+                  }
 
-                  {console.log(supplier)}
+                  {/* {console.log(JSON.parse(localStorage.getItem('supplier')))} */}
+                  {/* {console.log(localStorage.getItem('supplier'))} */}
+
                   {localStorage.getItem('supplier') ?
-                    <Nav.Link >
-                      <i className='fas fa-user' onClick={clickHandlerOUT} > Sign out</i>
+                    <>
+                    {/* {(JSON.parse(localStorage.getItem('supplier')).isAdmin) &&  */}
+                      <LinkContainer to='/transactions'>
+                      <Nav.Link >
+                        <i className='fas fa-user' > Transactions</i>
+                      </Nav.Link>
+                    </LinkContainer>
+                    
+                      <LinkContainer to='/profile'>
+                        <Nav.Link >
+                          <i className='fas fa-user' > Profile</i>
+                        </Nav.Link>
+                      </LinkContainer>
+                      <Nav.Link >
+                        <i className='fas fa-user' onClick={clickHandlerOUT} > Sign out</i>
 
-                    </Nav.Link>
+                      </Nav.Link>
+
+                    </>
+
                     :
+
+                    <>
+                    <LinkContainer to='/supply'>
+                      <Nav.Link>
+                        <i className='fas fa-user'> Sell on ECOM</i>
+                      </Nav.Link>
+                    </LinkContainer>
                     <LinkContainer to='/login'>
                       <Nav.Link>
 
@@ -115,8 +156,9 @@ const Header = () => {
 
                       </Nav.Link>
                     </LinkContainer>
-}
-              </>
+                    </>
+                  }
+                </>
 
                 :
 
@@ -131,33 +173,26 @@ const Header = () => {
                       <i className='fas fa-user' > Orders</i>
                     </Nav.Link>
                   </LinkContainer>
+                  <LinkContainer to='/transactions'>
+                      <Nav.Link >
+                        <i className='fas fa-user' > Transactions</i>
+                      </Nav.Link>
+                    </LinkContainer>
+
+                  <LinkContainer to='/profile'>
+                    <Nav.Link >
+                      <i className='fas fa-user' > Profile</i>
+                    </Nav.Link>
+                  </LinkContainer>
 
                   <Nav.Link >
                     <i className='fas fa-user' onClick={clickHandlerOUT} > Sign out</i>
-
                   </Nav.Link>
                 </>
 
 
-                // <LinkContainer to='/login'>
-                //   <Nav.Link>
-                //     <i className='fas fa-user'></i> Sign in
-                //   </Nav.Link>
-                // </LinkContainer>:
-                //   <LinkContainer to='/logout'>
-                //   <Nav.Link>
-                //     <i className='fas fa-user'></i> Sign out
-                //   </Nav.Link>
-                // </LinkContainer>
-
-
-
               }
-              <LinkContainer to='/profile'>
-                <Nav.Link >
-                  <i className='fas fa-user' > Profile</i>
-                </Nav.Link>
-              </LinkContainer>
+
             </Nav>
           </Navbar.Collapse>
         </Container>

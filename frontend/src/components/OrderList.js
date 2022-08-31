@@ -49,7 +49,7 @@ function OrderList({ ord }) {
                                                     $ {item.price}
                                                 </Col>
                                                 <Col md={3}>
-                                                    {order.statusDelivered ? 'Deliverd' : 'Processing'}
+                                                    {order.statusDelivered ? 'Delivered' : 'Processing'}
                                                 </Col>
                                             </Row>
                                         </ListGroup.Item>

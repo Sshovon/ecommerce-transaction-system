@@ -24,15 +24,17 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.post("/validateOrder", async (req, res) => {
+router.post("/validateorder", async (req, res) => {
   try {
 
     /// you have to give orderID
     const {trxID,quantity,productID,orderID}=req.body;
-    const product =await Product.find({productID})
+
+    const [product] =await Product.find({productID})
+    //console.log(product)
     const upQuantity= product.updateQuantity(quantity)
     const supplierValidate =SupplierTransaction.validate(trxID);
-    await Promise.all([upQuantity,supplierValidate]);
+    await Promise.all([supplierValidate,upQuantity]);
 
     const result = await SupplierTransaction.find({orderID,validateOrder:false})
     
@@ -51,6 +53,7 @@ router.post("/view", async (req, res) => {
   try {
     const {sellerID} = req.body
     const orders=await SupplierTransaction.find({sellerID});
+    console.log(orders)
     res.send(orders);
   } catch (e) {
     const error = e.message;

@@ -1,14 +1,21 @@
-import React,{useContext} from 'react'
+import React,{useContext, useState} from 'react'
 import '../../assets/main.css'
 import { StepperContext } from "../../contexts/StepperContext";
 import {MdOutlineFileDownloadDone} from 'react-icons/md'
+import Loader from '../Loader';
 function Final() {
   const { userData, setUserData } = useContext(StepperContext);
+  const [load, setLoad] = useState(true)
     return (
         <div className="container md:mt-10">
       <div className="flex flex-col items-center">
-       
-        <MdOutlineFileDownloadDone style={{color:'green', }} size={50}/>
+       {load && <Loader />}
+       {setTimeout(()=>{
+        setLoad(false)
+      },1000)}
+      {!load &&
+      <>
+      <MdOutlineFileDownloadDone style={{color:'green', }} size={50}/>
 
         <div className="mt-3 text-xl font-semibold uppercase text-green-500">
           Congratulations!
@@ -23,6 +30,8 @@ function Final() {
             Close
           </button>
         </a>
+        </>
+}
       </div>
     </div>
     )

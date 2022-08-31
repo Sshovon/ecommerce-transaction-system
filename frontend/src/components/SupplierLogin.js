@@ -10,6 +10,7 @@ function SupplierLogin({setAuth}) {
 
     const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const history = useHistory()
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -22,11 +23,16 @@ function SupplierLogin({setAuth}) {
           withCredentials: true,
         })
         .then(function (response) {
-          console.log(response.data);
+          const isAdmin = response.data.user.isAdmin;
           localStorage.setItem('supplier', JSON.stringify(response.data.user))
           process.env.test = true
           setAuth(true)
+          if(isAdmin){
+            history.push('/')
+          }
           window.history.go(0)
+          // setType(response.data.user.isAdmin)
+          
 
         })
         .catch(function (error) {

@@ -23,5 +23,5 @@ accountGenerate = async()=>{
 }
 
 
-//accountGenerate();
+accountGenerate();
 console.log("supplier-accounts generated")

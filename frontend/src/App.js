@@ -15,7 +15,7 @@ import BankScreen from './screens/BankScreen'
 import toast, { Toaster } from 'react-hot-toast'
 import ProfileScreen from './screens/ProfileScreen'
 import OrderScreen from './screens/OrderScreen'
-
+import TransactionScreen from './screens/TransactionScreen'
 
 const App = () => { 
   return ( 
@@ -36,9 +36,10 @@ const App = () => {
           <Route path = '/payment' component={BankScreen} />
           <Route path='/profile' component={ProfileScreen} />
           <Route path='/order' component = {OrderScreen} />
+          <Route path = '/transactions' component={TransactionScreen} />
         </Container>
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
     </>
     

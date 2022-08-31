@@ -13,7 +13,7 @@ const HomeScreen = () => {
   const fetchProducts = async ()=>{
     // const {data} = await axios.get('/product/viewall')
     const {data} = await axios.get('/api2/product/view')
-    console.log(data)
+    // console.log(data)
     setProducts(data)
     setCheck(true)
     // setUser(JSON.parse(localStorage.getItem('user')))
@@ -23,7 +23,7 @@ const HomeScreen = () => {
   useEffect(()=>{
 
     
-    console.log(JSON.parse(localStorage.getItem('user')))
+    // console.log(JSON.parse(localStorage.getItem('user')))
     // window.history.go(0)
     if(!check )
       fetchProducts()

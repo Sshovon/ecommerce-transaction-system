@@ -43,6 +43,7 @@ router.get("/information", auth, async (req, res) => {
 
 router.get("/view", auth, async (req, res) => {
   try {
+    console.log(req.user)
     const orders = await Order.find({ customerID: req.user.customerID });
     res.send(orders);
   } catch (e) {
@@ -56,7 +57,8 @@ router.get("/view", auth, async (req, res) => {
 router.post('/changestatus',async(req,res)=>{
     try{
 
-        const {orderID} = req.query.orderID;
+        const {orderID} = req.body;
+        console.log('orderID', orderID)
         await Order.changeStatus(orderID)
         res.status(200).send({
             status:true

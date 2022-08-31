@@ -8,6 +8,7 @@ const auth = require('../middlewares/auth')
 
 router.get('/view',auth ,async(req,res)=>{
     try {
+        console.log(req.user.contactInformation.email)
         const cart = await Cart.findOne( {email:req.user.contactInformation.email})
         res.send(cart)
     } catch (e) {

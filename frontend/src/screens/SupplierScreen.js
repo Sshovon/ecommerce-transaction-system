@@ -13,33 +13,34 @@ function SupplierScreen() {
     const [auth, setAuth] = useState(false)
     const [products, setProducts] = useState([])
     const [modal, setModal] = useState(false)
+    // const [admin, setAdmin] = useState(false)
 
     const fetchProducts = async () => {
-        // const {data} = await axios.get('/product/viewall')
-        const { data } = await axios.get('/api2/product/view')
+        if(localStorage.getItem('supplier')){
+            const sellerID = JSON.parse(localStorage.getItem('supplier')).sellerID
+            console.log(sellerID)
+            const { data } = await axios.get(`/api2/product/view?sellerID=33333`)
         console.log(data)
         setProducts(data)
+        }
+        
 
         // setUser(JSON.parse(localStorage.getItem('user')))
         // window.history.go(0)
     }
 
-    
-
-    const addProduct = ()=>{
-        
-    }
 
     useEffect(() => {
+        
+        // console.log(JSON.parse(localStorage.getItem('supplier')).accountNumber)
      
-            fetchProducts()
-           
+            fetchProducts()           
         
     },[auth,modal])
     return (
         <>
-        {console.log(products)}
-            {(!auth && !localStorage.getItem('supplier')) && <SupplierLogin setAuth={setAuth} />}
+        {/* {console.log(products)} */}
+            {(!auth && !localStorage.getItem('supplier')) && <SupplierLogin setAuth={setAuth}/>}
             {
                 auth || localStorage.getItem('supplier') && <div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -49,7 +50,7 @@ function SupplierScreen() {
                     {modal && <AddProduct modal={modal} setModal={setModal} product={null} update = {false} />}
                     </div>
                     <Row>
-                        {products.map((product) => (
+                        {products.length>0 && products.map((product) => (
                             <Col key={product.productID} sm={12} md={6} lg={4} xl={3}>
                                 <Product product={product} />
                             </Col>

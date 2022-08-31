@@ -19,12 +19,12 @@ router.post("/send", async (req, res) => {
     });
 
     const mailDetails = {
-      from: "devmail6199@gmail.com",
+      from: "E-Commerce 🛒<devmail6199@gmail.com>",
       to: email,
       subject: `OTP`,
       text: `Your OTP is ${code}`,
     };
-    //await mailTransporter.sendMail(mailDetails);
+    await mailTransporter.sendMail(mailDetails);
     console.log(code);
     res.send(code);
   } catch (e) {
@@ -38,7 +38,7 @@ router.get("/verify/:otp", auth, async (req, res) => {
     const email = req.user.contactInformation.email;
     const otp = req.params.otp;
     const result=await OTP.verifyOTP(email, otp);
-    res.send({ status: result });
+    res.send({ status: true });
   } catch (e) {
     const error = e.message;
     res.status(400).send({ error });
